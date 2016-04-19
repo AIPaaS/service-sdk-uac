@@ -2,22 +2,26 @@ package com.ai.paas.ipaas.uac.service;
 
 import com.ai.paas.ipaas.uac.service.impl.UserClientImpl;
 
-
 public class UserClientFactory {
-	private static IUserClient iUserClient;
+	private static volatile IUserClient iUserClient;
+
 	private UserClientFactory() {
 
 	}
-	public  static IUserClient getUserClient() {
-		if(iUserClient==null)
-			iUserClient = new UserClientImpl();
+
+	public static IUserClient getUserClient() {
+		if (iUserClient == null) {
+			synchronized (UserClientFactory.class) {
+				if (null == iUserClient)
+					iUserClient = new UserClientImpl();
+			}
+
+		}
 		return iUserClient;
-//		return PaasContextHolder.getBean(IUserClient.class);
 	}
-	
-	
+
+	@SuppressWarnings("unused")
+	public static void main(String[] args) {
+		IUserClient iUserClient = UserClientFactory.getUserClient();
+	}
 }
-
-
-
-

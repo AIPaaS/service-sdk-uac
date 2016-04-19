@@ -1,10 +1,9 @@
-package com.ai.paas.ipaas.uac.constants;
+package com.ai.paas.ipaas.uac;
 
 import com.ai.paas.ipaas.PaasRuntimeException;
 
-
 /**
- *  认证层运行异常定义
+ * 认证层运行异常定义
  *
  */
 
@@ -52,4 +51,3 @@ public class UserClientException extends PaasRuntimeException {
 	}
 
 }
-

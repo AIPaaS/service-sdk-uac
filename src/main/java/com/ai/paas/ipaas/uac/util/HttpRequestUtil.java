@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.ai.paas.ipaas.PaaSConstant;
+import com.ai.paas.ipaas.uac.UserClientException;
 import com.ai.paas.ipaas.uac.constants.UserSDKConstants;
 
 /**
@@ -61,17 +63,17 @@ public class HttpRequestUtil {
 				String readLine;
 				// 处理响应流，必须与服务器响应流输出的编码一致
 				in = new BufferedReader(new InputStreamReader(
-						conn.getInputStream(), "utf-8"));
+						conn.getInputStream(), PaaSConstant.CHARSET_UTF8));
 				while ((readLine = in.readLine()) != null) {
 					sb.append(readLine).append("\n");
 				}
 				in.close();
 				result = sb.toString();
 			} else {
-				throw new RuntimeException("HttpURLConnection   error");
+				throw new UserClientException("HttpURLConnection   error");
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new UserClientException("Http error!", e);
 		} finally {
 			try {
 				if (out != null) {
@@ -101,7 +103,6 @@ public class HttpRequestUtil {
 							"password=c96009e5552c5a43&authUserName=3&serviceId=SES910");
 			System.out.println(sr);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
