@@ -39,6 +39,10 @@ public class UserClientImpl implements IUserClient {
 					PaaSConstant.ExceptionCode.USER_AUTH_ERROR,
 					"username or password or authAdress or serviceId is blank");
 		}
+		username = username.trim();
+		password = password.trim();
+		authAdress = authAdress.trim();
+		serviceId = serviceId.trim();
 		String param = "password=" + password + "&authUserName=" + username
 				+ "&serviceId=" + serviceId;
 		String postRes = HttpRequestUtil.sendPost(authAdress, param);

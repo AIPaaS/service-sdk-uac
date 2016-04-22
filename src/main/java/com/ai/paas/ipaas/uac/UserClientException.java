@@ -18,18 +18,18 @@ public class UserClientException extends PaasRuntimeException {
 	}
 
 	public UserClientException(String errCode, String errDetail) {
-		super(errCode + ":" + errDetail);
+		super(errCode, errDetail);
 		this.errCode = errCode;
 		this.errDetail = errDetail;
 	}
 
 	public UserClientException(String errCode, Exception ex) {
-		super(errCode + ":" + errCode, ex);
+		super(errCode, ex);
 		this.errCode = errCode;
 	}
 
 	public UserClientException(String errCode, String errDetail, Exception ex) {
-		super(errCode + ":" + errDetail, ex);
+		super(errCode, errDetail, ex);
 		this.errCode = errCode;
 		this.errDetail = errDetail;
 	}

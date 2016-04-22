@@ -70,7 +70,7 @@ public class HttpRequestUtil {
 				in.close();
 				result = sb.toString();
 			} else {
-				throw new UserClientException("HttpURLConnection   error");
+				throw new UserClientException("HttpURLConnection   error:"+responseCode);
 			}
 		} catch (Exception e) {
 			throw new UserClientException("Http error!", e);
