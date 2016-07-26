@@ -58,7 +58,8 @@ public class UserClientImpl implements IUserClient {
 			ar.setConfigPasswd(postResJson.get("configPasswd").getAsString());
 			ar.setConfigAddr(postResJson.get("configAddr").getAsString());
 			ar.setConfigUser(postResJson.get("configUser").getAsString());
-			ar.setPid(postResJson.get("pid").getAsString());
+			if (null != postResJson.get("pid"))
+				ar.setPid(postResJson.get("pid").getAsString());
 		} else {
 			throw new UserClientException(
 					PaaSConstant.ExceptionCode.USER_AUTH_ERROR,
