@@ -105,10 +105,12 @@ sourceSets {
 
  
 ext {
-	//moduleMode="-SNAPSHOT";
-	moduleMode="";
+	moduleVersion = version != "unspecified"?version:'0.3'
+	moduleMode = project.hasProperty('mode') ? project.getProperty('mode') : 'R'
+	if(moduleMode == 'S'){
+		moduleVersion = moduleVersion + "-SNAPSHOT";
+	}
 	moduleName="ipaas-uac";
-	moduleVersion="0.3"+moduleMode
 	publishUserName = "devadm"
 	publishUserPassword = "Devadm@1212"
 	publishSnapShotsURL="http://10.1.228.199:18081/nexus/content/repositories/snapshots/"
@@ -135,6 +137,18 @@ jar {
         attributes 'packageName': moduleName, 'Built-By': builtBy,'create-date': new Date().format('yyyy-MM-dd HH:mm:ss')
     }
 }
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+	baseName moduleName
+    version moduleVersion
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
+
 task copyFiles << { 
         copy{ 
                 from configurations.compile 
@@ -160,6 +174,23 @@ publish.dependsOn build
 
 publishing {
     publications {
+       mavenJar(MavenPublication) {
+        	groupId group
+        	artifactId "${moduleName}"
+            artifact sourcesJar
+            version moduleVersion
+            pom.withXml {
+	            asNode().children().last() + {
+	             delegate.dependencies {
+	                    delegate.dependency {
+	                        delegate.groupId("com.ai")
+	                        delegate.artifactId("ipaas-common")
+	                        delegate.version("0.3")
+	                    }
+	                }
+	             }
+	        }
+	   }
        publishing.publications.create("${moduleName}", MavenPublication) {
             groupId group
             artifactId moduleName
