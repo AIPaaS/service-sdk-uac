@@ -15,7 +15,7 @@ public class AuthDescriptor implements Serializable{
 
 	public AuthDescriptor(String authAdress,String pid, String servicePwd, String serviceId)  {
 		this.authAdress=authAdress;
-		if(pid != null && pid.indexOf("@") > -1){
+		if(pid != null && pid.indexOf('@') > -1){
 			this.userName = pid;
 		}
 		this.setPid(pid);
